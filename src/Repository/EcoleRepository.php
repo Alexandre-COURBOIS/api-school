@@ -47,4 +47,12 @@ class EcoleRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getEcole()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.nom', 'e.adresse', 'e.createdAt', 'e.updatedAt')
+            ->getQuery()
+            ->getResult();
+    }
 }
