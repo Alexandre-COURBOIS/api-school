@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\EleveRepository;
+use App\Service\SerializerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,22 +16,15 @@ use Symfony\Component\Serializer\Serializer;
 
 class EleveController extends AbstractController
 {
-    private Serializer $serializer;
+    private SerializerService $serializerService;
 
-    public function __construct()
+    public function __construct(serializerService $serializer)
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
 
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getNom();
-            },
-        ];
+        $this->serializerService = $serializer;
 
-        $normalizer = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
-
-        $this->serializer= new Serializer($normalizer, $encoders);
     }
+
 
     /**
      * @Route("/eleve", name="eleve", methods={"GET"})
@@ -41,7 +35,7 @@ class EleveController extends AbstractController
     {
         $eleve = $eleveRepository->findAll();
 
-        $jsonContent = $this->serializer->serialize($eleve, 'json');
+        $jsonContent = $this->serializerService->RelationSerializer($eleve, 'json');
 
         $response = JsonResponse::fromJsonString($jsonContent);
 

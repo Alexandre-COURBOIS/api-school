@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ClasseRepository;
+use App\Service\SerializerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,15 +16,15 @@ use Symfony\Component\Serializer\Serializer;
 class ClasseController extends AbstractController
 {
 
-    private $serializer;
+    private SerializerService $serializerService;
 
-    public function __construct()
+    public function __construct(serializerService $serializer)
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
-        $normalizers = [new ObjectNormalizer()];
 
-        $this->serializer= new Serializer($normalizers, $encoders);
+        $this->serializerService = $serializer;
+
     }
+
 
     /**
      * @Route("/classe", name="classe", methods={"GET"})
@@ -34,7 +35,7 @@ class ClasseController extends AbstractController
     {
         $classe = $classeRepository->findAll();
 
-        $jsonContent = $this->serializer->serialize($classe, 'json');
+        $jsonContent = $this->serializerService->RelationSerializer($classe, 'json');
 
         $response = JsonResponse::fromJsonString($jsonContent);
 
