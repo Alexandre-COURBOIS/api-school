@@ -19,6 +19,6 @@ class EcoleController extends AbstractController
     {
         $ecole = $ecoleRepository->findAll();
 
-        return new JsonResponse($ecole);
+        return new JsonResponse(["ecoles" => $ecole]);
     }
 }
