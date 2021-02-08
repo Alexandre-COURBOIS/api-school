@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\EcoleRepository;
+use App\Repository\EleveRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +13,9 @@ use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class EcoleController extends AbstractController
+class EleveController extends AbstractController
 {
+
     private $serializer;
 
     public function __construct()
@@ -33,15 +34,15 @@ class EcoleController extends AbstractController
     }
 
     /**
-     * @Route("/ecole", name="ecole", methods={"GET"})
-     * @param EcoleRepository $ecoleRepository
+     * @Route("/eleve", name="eleve", methods={"GET"})
+     * @param EleveRepository $eleveRepository
      * @return Response
      */
-    public function index(EcoleRepository $ecoleRepository): Response
+    public function index(EleveRepository $eleveRepository): Response
     {
-        $ecole = $ecoleRepository->findAll();
+        $eleve = $eleveRepository->findAll();
 
-        $jsonContent = $this->serializer->serialize($ecole, 'json');
+        $jsonContent = $this->serializer->serialize($eleve, 'json');
 
         $response = JsonResponse::fromJsonString($jsonContent);
 
