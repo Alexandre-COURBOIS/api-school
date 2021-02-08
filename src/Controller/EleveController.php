@@ -15,8 +15,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class EleveController extends AbstractController
 {
-
-    private $serializer;
+    private Serializer $serializer;
 
     public function __construct()
     {
