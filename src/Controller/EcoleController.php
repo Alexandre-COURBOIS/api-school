@@ -32,12 +32,14 @@ class EcoleController extends AbstractController
      */
     public function index(EcoleRepository $ecoleRepository): Response
     {
-        $ecole = $ecoleRepository->findAll();
+//        $ecole = $ecoleRepository->findAll();
+//
+//        $jsonContent = $this->serializerService->RelationSerializer($ecole, 'json');
+//
+//        $response = JsonResponse::fromJsonString($jsonContent);
+//
+//        return $response;
 
-        $jsonContent = $this->serializerService->RelationSerializer($ecole, 'json');
-
-        $response = JsonResponse::fromJsonString($jsonContent);
-
-        return $response;
+        return JsonResponse::fromJsonString($this->serializerService->RelationSerializer($ecoleRepository->findAll(),'json'));
     }
 }
