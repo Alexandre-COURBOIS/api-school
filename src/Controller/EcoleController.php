@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\EcoleRepository;
+use App\Service\SerializerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,21 +16,13 @@ use Symfony\Component\Serializer\Serializer;
 
 class EcoleController extends AbstractController
 {
-    private $serializer;
+    private SerializerService $serializerService;
 
-    public function __construct()
+    public function __construct(serializerService $serializer)
     {
-        $encoders = [new XmlEncoder(), new JsonEncoder()];
 
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getNom();
-            },
-        ];
+        $this->serializerService = $serializer;
 
-        $normalizer = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
-
-        $this->serializer= new Serializer($normalizer, $encoders);
     }
 
     /**
@@ -41,7 +34,7 @@ class EcoleController extends AbstractController
     {
         $ecole = $ecoleRepository->findAll();
 
-        $jsonContent = $this->serializer->serialize($ecole, 'json');
+        $jsonContent = $this->serializerService->RelationSerializer($ecole, 'json');
 
         $response = JsonResponse::fromJsonString($jsonContent);
 

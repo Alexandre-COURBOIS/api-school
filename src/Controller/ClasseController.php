@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
@@ -21,16 +20,9 @@ class ClasseController extends AbstractController
     public function __construct()
     {
         $encoders = [new XmlEncoder(), new JsonEncoder()];
+        $normalizers = [new ObjectNormalizer()];
 
-        $defaultContext = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-                return $object->getNom();
-            },
-        ];
-
-        $normalizer = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
-
-        $this->serializer= new Serializer($normalizer, $encoders);
+        $this->serializer= new Serializer($normalizers, $encoders);
     }
 
     /**
