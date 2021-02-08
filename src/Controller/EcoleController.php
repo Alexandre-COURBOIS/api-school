@@ -18,9 +18,7 @@ class EcoleController extends AbstractController
 
     public function __construct(serializerService $serializer)
     {
-
         $this->serializerService = $serializer;
-
     }
 
     /**

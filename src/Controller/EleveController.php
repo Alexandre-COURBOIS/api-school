@@ -22,7 +22,6 @@ class EleveController extends AbstractController
         $this->serializerService = $serializer;
     }
 
-
     /**
      * @Route("/eleve", name="eleve", methods={"GET"})
      * @param EleveRepository $eleveRepository
