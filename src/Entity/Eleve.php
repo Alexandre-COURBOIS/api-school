@@ -37,6 +37,12 @@ class Eleve
      */
     private $createdAt;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Classe::class, inversedBy="eleves")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $classe;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +92,18 @@ class Eleve
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getClasse(): ?Classe
+    {
+        return $this->classe;
+    }
+
+    public function setClasse(?Classe $classe): self
+    {
+        $this->classe = $classe;
 
         return $this;
     }

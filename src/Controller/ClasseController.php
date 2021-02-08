@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\EcoleRepository;
+use App\Repository\ClasseRepository;
 use App\Service\SerializerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -10,12 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Normalizer\AbstractNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Serializer;
 
-class EcoleController extends AbstractController
+class ClasseController extends AbstractController
 {
+
     private SerializerService $serializerService;
 
     public function __construct(serializerService $serializer)
@@ -25,21 +25,20 @@ class EcoleController extends AbstractController
 
     }
 
+
     /**
-     * @Route("/ecole", name="ecole", methods={"GET"})
-     * @param EcoleRepository $ecoleRepository
+     * @Route("/classe", name="classe", methods={"GET"})
+     * @param ClasseRepository $classeRepository
      * @return Response
      */
-    public function index(EcoleRepository $ecoleRepository): Response
+    public function index(ClasseRepository $classeRepository): Response
     {
-//        $ecole = $ecoleRepository->findAll();
-//
-//        $jsonContent = $this->serializerService->RelationSerializer($ecole, 'json');
-//
-//        $response = JsonResponse::fromJsonString($jsonContent);
-//
-//        return $response;
+        $classe = $classeRepository->findAll();
 
-        return JsonResponse::fromJsonString($this->serializerService->RelationSerializer($ecoleRepository->findAll(),'json'));
+        $jsonContent = $this->serializerService->RelationSerializer($classe, 'json');
+
+        $response = JsonResponse::fromJsonString($jsonContent);
+
+        return $response;
     }
 }
