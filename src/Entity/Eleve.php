@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\EleveRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EleveRepository::class)
@@ -19,16 +20,44 @@ class Eleve
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner un nom d'elève.",
+     *     groups={"RegisterEleve"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Merci de renseigner un nom d'elève correct.",
+     *     groups={"RegisterEleve"}
+     *     )
      */
     private $nom;
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner un prenom d'elève.",
+     *     groups={"RegisterEleve"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Merci de renseigner un prenom d'elève correct.",
+     *     groups={"RegisterEleve"}
+     *     )
      */
     private $prenom;
 
     /**
      * @ORM\Column(type="integer")
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner un âge.",
+     *     groups={"RegisterEleve"}
+     *     )
+     *
      */
     private $age;
 

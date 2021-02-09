@@ -6,9 +6,11 @@ use App\Repository\EcoleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=EcoleRepository::class)
+ * @ORM\HasLifecycleCallbacks
  */
 class Ecole
 {
@@ -21,11 +23,33 @@ class Ecole
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner un nom d'école.",
+     *     groups={"RegisterEcole"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="5",
+     *     minMessage="Merci de renseigner un nom d'école correct.",
+     *     groups={"RegisterEcole"}
+     *     )
      */
     private $nom;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)@
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner votre adresse.",
+     *     groups={"RegisterEcole"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="10",
+     *     minMessage="Merci de renseigner une adresse correct.",
+     *     groups={"RegisterEcole"}
+     *     )
      */
     private $adresse;
 
@@ -40,7 +64,7 @@ class Ecole
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Classe::class, mappedBy="ecole")
+     * @ORM\OneToMany(targetEntity=Classe::class, mappedBy="ecole", cascade="remove")
      */
     private $classes;
 

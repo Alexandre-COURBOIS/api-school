@@ -6,6 +6,7 @@ use App\Repository\ClasseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ClasseRepository::class)
@@ -21,6 +22,17 @@ class Classe
 
     /**
      * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(
+     *     message="Merci de renseigner un nom de classe.",
+     *     groups={"RegisterClasse"}
+     *     )
+     *
+     * @Assert\Length(
+     *     min="3",
+     *     minMessage="Merci de renseigner un nom de classe correct.",
+     *     groups={"RegisterClasse"}
+     *     )
      */
     private $nom;
 
@@ -31,7 +43,7 @@ class Classe
     private $ecole;
 
     /**
-     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="classe")
+     * @ORM\OneToMany(targetEntity=Eleve::class, mappedBy="classe", cascade="remove")
      */
     private $eleves;
 
