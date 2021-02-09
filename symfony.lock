@@ -96,6 +96,9 @@
     "fzaninotto/faker": {
         "version": "v1.9.2"
     },
+    "gesdinet/jwt-refresh-token-bundle": {
+        "version": "v0.10.1"
+    },
     "laminas/laminas-code": {
         "version": "4.0.0"
     },
