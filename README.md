@@ -12,6 +12,6 @@ Ou les commandes  via openssl :
 Configurer les paramètres du JWT de la base de donnée etc dans le .env.local ou .env 
 
 Lancer :
-symfony server:start !
+symfony server:start 
   
 
